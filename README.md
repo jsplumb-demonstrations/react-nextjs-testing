@@ -1,27 +1,19 @@
-# Next.js + Cypress
+# Next.js + Cypress + JsPlumb
 
-This example shows how to configure Cypress to work with Next.js.
+This example shows how to configure Cypress to work with Next.js and JsPlumb.
 
-## Deploy your own
+## Key Points
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example) or preview live with [StackBlitz](https://stackblitz.com/github/vercel/next.js/tree/canary/examples/with-cypress)
+- Ensure you have included the app CSS in the Cypress config located at `cypress/support/component.ts`. In this app we have this declaration:
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-cypress&project-name=with-cypress&repository-name=with-cypress)
-
-## How to use
-
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init), [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/), or [pnpm](https://pnpm.io) to bootstrap the example:
-
-```bash
-npx create-next-app --example with-cypress with-cypress-app
+```javascript
+import '../../styles/globals.css'  // for JSPLUMB test
 ```
 
-```bash
-yarn create next-app --example with-cypress with-cypress-app
+This is important as `globals.css` itself imports JsPlumb's stylesheet, which contains various sane defaults that JsPlumb requires in order to function correctly.  You may also be able to just import JsPlumb's stylesheet:
+
+```javascript
+import '../../node_modules/@jsplumbtoolkit/browser-ui/css/jsplumbtoolkit.css'  // for JSPLUMB test
 ```
 
-```bash
-pnpm create next-app --example with-cypress with-cypress-app
-```
-
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+- We wrote a couple of helper functions to access the component under test and create a `jsPlumbToolkitTestHarness` from it. These functions are in `components/canvas-component.cy.tsx`; if you wanted to test multiple components a good approach would be to extract this to a common module.  If there is sufficient interest we could ship these helper functions as a separate `@jsplumbtoolkit/browser-ui-react-cypress` package. Drop us a line if that's something you're interested in.
