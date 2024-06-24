@@ -1,7 +1,6 @@
 import {ControlsComponent, JsPlumbToolkitSurfaceComponent, newInstance} from "@jsplumbtoolkit/browser-ui-react"
 import {MutableRefObject, useEffect, useRef, useState} from "react"
 import {createRoot} from "react-dom/client"
-import styles from "../styles/Home.module.css"
 
 import {AbsoluteLayout, EVENT_CANVAS_CLICK, EVENT_TAP, VanillaInspector} from "@jsplumbtoolkit/browser-ui"
 
